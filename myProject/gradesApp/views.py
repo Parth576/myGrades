@@ -3,10 +3,11 @@ from gradesApp.forms import studentForm,studentAddForm,teacherForm,teacherAddFor
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.contrib.auth import authenticate,login,logout 
+from django.contrib.auth import authenticate,login,logout
+from gradesApp.models import Student,Teacher 
+from django.contrib.auth.models import User
 
 # Create your views here.
-
 
 def index(request):
     return render(request,'gradesApp/index.html')
@@ -73,3 +74,23 @@ def userLogin(request):
             return HttpResponse("invalid login credentials")
     else:
         return render(request,'gradesApp/login.html',{})
+
+@login_required
+def dashboard(request):
+    try:
+        current=Student.objects.get(student=request.user)
+    except Student.DoesNotExist:
+        current=Teacher.objects.get(teacher=request.user)
+    if current.is_student:
+        return redirect('/studentDash/')
+    else:
+        return redirect('/teacherDash/')
+    return render(request,'gradesApp/dashboard.html')
+
+    
+
+def studentDash(request):
+    return render(request,'gradesApp/studentDash.html')
+
+def teacherDash(request):
+    return render(request,'gradesApp/teacherDash.html')
