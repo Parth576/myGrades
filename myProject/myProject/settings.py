@@ -131,3 +131,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIR = [
     STATIC_DIR, 
 ]
+
+LOGIN_URL = 'gradesApp/userLogin'

@@ -21,4 +21,5 @@ urlpatterns = [
     path('gradesApp/',include('gradesApp.urls')),
     path('',views.index,name='index'),
     path('admin/', admin.site.urls),
+    path('logout/',views.userLogout,name='logout'),
 ]
