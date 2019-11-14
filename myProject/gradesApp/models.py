@@ -23,13 +23,13 @@ class Teacher(models.Model):
 
 class Grade(models.Model):
     stud=models.ForeignKey(Student,on_delete=models.CASCADE)
-    ds=models.IntegerField()
-    dld=models.IntegerField()
-    dm=models.IntegerField()
-    la=models.IntegerField()
+    ds=models.IntegerField(null=True,blank=True)
+    dld=models.IntegerField(null=True,blank=True)
+    dm=models.IntegerField(null=True,blank=True)
+    la=models.IntegerField(null=True,blank=True)
 
     def __str__(self):
-        return self.stud.username
+        return str(self.stud)
 
 
 

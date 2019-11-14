@@ -4,7 +4,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
-from gradesApp.models import Student,Teacher 
+from gradesApp.models import Student,Teacher,Grade
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -59,11 +59,11 @@ def registerTeacher(request):
     return render(request,'gradesApp/registerTeacher.html',{'var_teacherForm':var_teacherForm,'var_teacherAddForm':var_teacherAddForm,'registered':registered})
     
 def userLogin(request):
+    invalidlogin=False
     if request.method=='POST':
         username=request.POST.get('username')
         password=request.POST.get('password')
         user=authenticate(username=username,password=password)
-
         if user:
             if user.is_active:
                 login(request,user)
@@ -71,9 +71,10 @@ def userLogin(request):
             else:
                 return HttpResponse('Account not active')
         else:
-            return HttpResponse("invalid login credentials")
+            invalidlogin=True
+            return redirect('/gradesApp/login/')
     else:
-        return render(request,'gradesApp/login.html',{})
+        return render(request,'gradesApp/login.html',{'invalidlogin':invalidlogin})
 
 @login_required
 def dashboard(request):
@@ -90,7 +91,9 @@ def dashboard(request):
     
 
 def studentDash(request):
-    return render(request,'gradesApp/studentDash.html')
+    curr=Student.objects.get(student=request.user)
+    markslist=Grade.objects.filter(stud=curr)[0]
+    return render(request,'gradesApp/studentDash.html',{'markslist':markslist})
 
 def teacherDash(request):
     return render(request,'gradesApp/teacherDash.html')

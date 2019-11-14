@@ -2,6 +2,9 @@
 {% block body_block %}
 
 <div class="jumbotron">
+    {% if invalidlogin %}
+        <h3>Please enter correct login details!</h3>
+    {% endif %}
     <form action="{% url 'gradesApp:userLogin' %}" method="POST">
         {% csrf_token %}
         <label for="username">Username: </label>
