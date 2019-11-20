@@ -3,17 +3,18 @@
 
 <div class="jumbotron">
    {% if registered %}
-        <h1>Thanks for registering, Please Log in!</h1>
-    {% else %}
-        <h1>Registration for Teachers:</h1>
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{ var_teacherForm.as_p }}
-            {{ var_teacherAddForm.as_p }}
-            <input type="submit" value="Register" class="btn btn-primary">
-        </form>
-    {% endif %}
+		<h1>Thanks for registering, Please Log in!</h1>
+	{% else %}
+		<h1>Registration for Teachers:</h1>
+		<form action="" method="POST">
+			{% csrf_token %}
+			<table>
+				{{ var_teacherForm.as_table }}
+				{{ var_teacherAddForm.as_table }}
+			</table>
+			<input type="submit" value="Register" class="btn btn-primary">
+		</form>
+	{% endif %}
 </div>
-
 
 {% endblock %}
