@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from gradesApp.models import Student,Teacher
+from gradesApp.models import Student,Teacher,Grade
 
 class studentForm(forms.ModelForm):
 	password=forms.CharField(widget=forms.PasswordInput())
@@ -37,4 +37,24 @@ class teacherAddForm(forms.ModelForm):
 	class Meta():
 		model=Teacher
 		fields=['subject','phone']
+
+class dsForm(forms.ModelForm):
+    class Meta():
+        model=Grade
+        fields=['stud','ds']
+
+class dldForm(forms.ModelForm):
+    class Meta():
+        model=Grade
+        fields=['stud','dld']
+
+class dmForm(forms.ModelForm):
+    class Meta():
+        model=Grade
+        fields=['stud','dm']
+
+class laForm(forms.ModelForm):
+    class Meta():
+        model=Grade
+        fields=['stud','la']
 

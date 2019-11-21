@@ -5,6 +5,20 @@
     <div class="jumbotron">
         <h2>Teacher Dash</h2>
         <hr>
+        <h3>Enter Marks for {{ curr.subject }}</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% if 'DS' in curr.subject %}
+                {{ var_dsForm.as_p }}
+            {% elif 'DLD' in curr.subject %}
+                {{ var_dldForm.as_p }}
+            {% elif 'DM' in curr.subject %}
+                {{ var_dmForm.as_p }}
+            {% else %}
+                {{ var_laForm.as_p }}
+            {% endif %}
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
     </div>
 </div>
 

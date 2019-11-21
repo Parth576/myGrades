@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from gradesApp.forms import studentForm,studentAddForm,teacherForm,teacherAddForm
+from gradesApp.forms import studentForm,studentAddForm,teacherForm,teacherAddForm,dsForm,dldForm,laForm,dmForm
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -96,4 +96,24 @@ def studentDash(request):
     return render(request,'gradesApp/studentDash.html',{'markslist':markslist})
 
 def teacherDash(request):
-    return render(request,'gradesApp/teacherDash.html')
+    curr=Teacher.objects.get(teacher=request.user)
+    if request.method=='POST':
+        var_dsForm=dsForm(request.POST)
+        var_dldForm=dldForm(request.POST)
+        var_dmForm=dmForm(request.POST)
+        var_laForm=laForm(request.POST)
+        if curr.subject=='DS':
+            var_dsForm.save()
+        elif curr.subject=='DLD':
+            var_dldForm.save()
+        elif curr.subject=='DM':
+            var_dmForm.save()
+        else:
+            var_laForm.save()
+    else:
+        var_dsForm=dsForm()
+        var_dldForm=dldForm()
+        var_dmForm=dmForm()
+        var_laForm=laForm()
+    context={'var_dsForm':var_dsForm,'var_dldForm':var_dldForm,'var_dmForm':var_dmForm,'var_laForm':var_laForm,'curr':curr}
+    return render(request,'gradesApp/teacherDash.html',context=context)
